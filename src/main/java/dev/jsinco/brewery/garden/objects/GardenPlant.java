@@ -1,5 +1,6 @@
 package dev.jsinco.brewery.garden.objects;
 
+import com.destroystokyo.paper.MaterialTags;
 import com.dre.brewery.utility.Logging;
 import dev.jsinco.brewery.garden.BreweryGarden;
 import dev.jsinco.brewery.garden.configuration.BreweryGardenConfig;
@@ -13,6 +14,7 @@ import lombok.ToString;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Leaves;
 import org.jetbrains.annotations.Nullable;
@@ -103,7 +105,9 @@ public class GardenPlant {
             } else if (block.getType() == Material.PLAYER_HEAD) {
                 block.getWorld().dropItemNaturally(block.getLocation(), this.type.getItemStack(1));
             }
-            block.setType(Material.AIR);
+            if(MaterialTags.WOODEN_FENCES.isTagged(block) || Tag.LEAVES.isTagged(block.getType())) {
+                block.setType(Material.AIR);
+            }
         }
         return true;
     }
